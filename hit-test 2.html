@@ -122,9 +122,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           });
 
           renderer = new Renderer(gl);
-          renderer.outputEncoding = sRGBEncoding;
-
           scene.setRenderer(renderer);
+          renderer.outputEncoding = sRGBEncoding;
         }
 
         session.updateRenderState({ baseLayer: new XRWebGLLayer(session, gl) });

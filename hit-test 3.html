@@ -3,18 +3,36 @@
 <head>
     <script src="https://unpkg.com/@egjs/view3d@latest/dist/view3d.pkgd.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@egjs/view3d@latest/css/view3d-bundle.min.css">
+    <style>
+        .view3d-wrapper {
+            width: 50%;
+            height: 50vh;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="wrapper-el" class="view3d-wrapper view3d-square">
-        <canvas class="view3d-canvas"></canvas>
+    <div id="wrapper-el" class="view3d-wrapper">
+        <canvas class="view3d-canvas" width="600" height="600" style="cursor: grab;"></canvas>
+        <!-- Custom AR Button -->
+        <button id="enter-ar">ENTER AR</button>
     </div>
     <script>
         new View3D("#wrapper-el", {
-            src: "https://malacatran.github.io/media/gltf/custom/cartel.gltf",
+            src: "https://malacatran.github.io/media/gltf/custom/custom.gltf",
             poster: "https://naver.github.io/egjs-view3d/poster/alarm_default.png",
-            translate: false
+            webAR: {
+                vertical: true
+            },
+            sceneViewer: {
+                vertical: true
+            }
         });
+        document
+            .querySelector("#enter-ar")
+            .addEventListener("click", () => {
+                view3D.ar.enter();
+            });
     </script>
 </body>
 

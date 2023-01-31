@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/@egjs/view3d@latest/dist/view3d.pkgd.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@egjs/view3d@latest/css/view3d-bundle.min.css">
+</head>
+
+<body>
+    <div id="wrapper-el" class="view3d-wrapper view3d-square">
+        <canvas class="view3d-canvas"></canvas>
+    </div>
+    <script>
+        new View3D("#wrapper-el", {
+            src: "https://malacatran.github.io/media/gltf/custom/cartel.gltf",
+            poster: "https://naver.github.io/egjs-view3d/poster/alarm_default.png",
+            translate: false
+        });
+    </script>
+</body>
+
+</html>

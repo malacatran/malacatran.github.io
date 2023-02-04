@@ -170,6 +170,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     let rayOrigin = vec3.create();
     let rayDirection = vec3.create();
+
     function onSelect(event) {
       if (reticle.visible) {
         // The reticle should already be positioned at the latest hit point, 
@@ -180,21 +181,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }
 
     // Called every time a XRSession requests that a new frame be drawn.
-    function onXRFrame(hrTime, xrFrame) {
-      let xrSession = xrFrame.session;
-      xrSession.requestAnimationFrame(onXRFrame);
-      let xrViewerPose = xrFrame.getViewerPose(xrRefSpace);
+    function onXRFrame(t, frame) {
+      let session = frame.session;
+      let pose = frame.getViewerPose(xrRefSpace);
 
       reticle.visible = false;
 
-      // Reminder: the hitTestSource was acquired during onSessionStart()
-      if (xrHitTestSource && xrViewerPose) {
-        let hitTestResults = xrFrame.getHitTestResults(xrHitTestSource);
+      // If we have a hit test source, get its results for the frame
+      // and use the pose to display a reticle in the scene.
+      if (xrHitTestSource && pose) {
+        let hitTestResults = frame.getHitTestResults(xrHitTestSource);
         if (hitTestResults.length > 0) {
           let pose = hitTestResults[0].getPose(xrRefSpace);
-          reticle.matrix = pose.transform.matrix;
           reticle.visible = true;
-
+          reticle.matrix = pose.transform.matrix;
         }
       }
 
@@ -202,7 +202,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
       session.requestAnimationFrame(onXRFrame);
 
-      scene.drawXRFrame(xrFrame, pose);
+      scene.drawXRFrame(frame, pose);
 
       scene.endFrame();
     }
